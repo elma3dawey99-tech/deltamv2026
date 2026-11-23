@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>#DeltaMV2026 · Mechanical Ventilation Workshop</title>
+<meta name="theme-color" content="#000A16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#000A16; --bg2:#061430; --card:rgba(255,255,255,.045); --line:rgba(159,243,255,.14);
+  --cyan:#9ff3ff; --cyan2:#7ff0ff; --orange:#FF8A1F; --gold:#ffcf6b; --muted:#a9bfd9; --text:#eef6ff;
+  --gA:#FF8A1F; --gB:#22D3EE; --gC:#34D399; --gD:#A78BFA;
+  --r:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Cairo,Inter,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+html[lang=en] body{font-family:Inter,system-ui,sans-serif}
+img{max-width:100%;display:block}
+.hero-grid>*,.ham>*,.c6>*,.finder>*,.obj>*,.after>*,.pg>*{min-width:0}
+html,body{overflow-x:clip}
+a{color:var(--cyan)}
+button{font:inherit;color:inherit}
+/* language switching */
+html[lang=ar] .en{display:none!important}
+html[lang=en] .ar{display:none!important}
+.mono{font-family:'JetBrains Mono',monospace;letter-spacing:.08em}
+.cond{font-family:'Barlow Condensed',Cairo,sans-serif}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+/* background ambience */
+.amb{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.amb i{position:absolute;border-radius:50%;filter:blur(10px)}
+.amb .a1{width:620px;height:620px;left:-240px;top:-200px;background:radial-gradient(circle,rgba(70,60,220,.38),transparent 65%)}
+.amb .a2{width:700px;height:700px;right:-260px;top:120px;background:radial-gradient(circle,rgba(0,200,255,.26),transparent 66%)}
+.amb .a3{width:560px;height:560px;left:-200px;bottom:-220px;background:radial-gradient(circle,rgba(255,138,31,.16),transparent 65%)}
+.amb svg{position:absolute;inset:0;width:100%;height:100%;opacity:.16}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(0,10,22,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .logos{display:flex;align-items:center;gap:12px;direction:ltr;min-width:0}
+.top .logos img{height:26px;width:auto}
+.top .logos .rt{height:30px}
+.top .sep{width:1px;height:22px;background:rgba(255,255,255,.3)}
+.top .tag{margin-inline-start:auto;font-family:'Barlow Condensed';font-weight:800;font-size:20px;letter-spacing:.02em;direction:ltr;white-space:nowrap}
+.top .tag b{color:var(--orange)}
+.langbtn{display:none!important;border:1px solid rgba(255,255,255,.25);border-radius:999px;overflow:hidden;direction:ltr;flex:none}
+.langbtn button{background:none;border:0;padding:5px 11px;font-size:13px;font-weight:800;cursor:pointer;color:var(--muted)}
+.langbtn button.on{background:var(--orange);color:#fff}
+
+/* nav chips */
+.nav{position:sticky;top:51px;z-index:40;display:flex;gap:8px;overflow-x:auto;padding:10px 18px;background:rgba(0,10,22,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);scrollbar-width:none;border-bottom:1px solid rgba(159,243,255,.07)}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--muted);font-size:13px;font-weight:700;padding:6px 14px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;transition:.25s}
+.nav a.on,.nav a:hover{color:#fff;border-color:var(--orange);background:rgba(255,138,31,.14)}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+section{padding:64px 0 24px;scroll-margin-top:100px}
+.kick{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--orange);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+html[lang=ar] .kick{letter-spacing:0;font-size:15px}
+.kick:before{content:"";width:34px;height:3px;background:var(--orange);flex:none}
+h2{margin:10px 0 6px;font-family:'Barlow Condensed',Cairo,sans-serif;font-weight:900;font-size:clamp(34px,7vw,54px);line-height:1.02;text-transform:uppercase;letter-spacing:.01em}
+html[lang=ar] h2{font-family:Cairo;font-size:clamp(28px,6vw,44px);line-height:1.25;text-transform:none}
+h2 .c{color:var(--cyan)}
+.sub{color:var(--muted);margin:0 0 26px;max-width:680px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+/* HERO */
+.hero{padding:34px 0 10px;position:relative}
+.hero-grid{display:grid;gap:10px}
+.organized{font-size:12px;font-weight:800;color:var(--orange);letter-spacing:.2em;text-transform:uppercase}
+html[lang=ar] .organized{letter-spacing:0;font-size:14px}
+.dept{font-family:'Barlow Condensed',Cairo;font-weight:600;font-size:19px;color:#fff;opacity:.92}
+html[lang=ar] .dept{font-family:Cairo;font-weight:700;font-size:17px}
+.title{margin:18px 0 0;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(58px,16vw,132px);line-height:.84;text-transform:uppercase;direction:ltr;text-align:start}
+html[lang=ar] .title{text-align:right}
+.title span{display:block}
+.title .v{color:var(--cyan)}
+.title .sm{font-size:.42em;letter-spacing:.06em;color:#fff;opacity:.85;margin-bottom:8px;font-weight:700}
+.title-ar{margin:14px 0 0;font-family:Cairo;font-weight:800;font-size:clamp(22px,5.4vw,34px);line-height:1.35}
+
+.dev{position:relative;width:min(100%,460px);margin:6px auto 0;aspect-ratio:1/1.12}
+.dev svg.ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.dev .ring .spin{transform-origin:50% 50%;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.dev img{position:absolute;left:50%;top:3%;height:94%;width:auto;transform:translateX(-50%);filter:drop-shadow(0 26px 30px rgba(0,0,0,.55))}
+.dev .shadow{position:absolute;left:18%;right:18%;bottom:1%;height:6%;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.85),transparent 70%)}
+.dev .call{position:absolute;display:flex;flex-direction:column;gap:2px;direction:ltr;font-family:'Barlow Condensed';text-transform:uppercase}
+.dev .call b{font-family:'JetBrains Mono';font-size:11px;color:var(--orange);letter-spacing:.2em}
+.dev .call span{font-weight:800;font-size:clamp(15px,3.8vw,20px);letter-spacing:.08em}
+.dev .call.l{text-align:left}
+.dev .c1{left:0;top:16%}.dev .c2{right:0;top:28%;text-align:right}.dev .c3{left:0;top:70%}.dev .c4{right:0;top:76%;text-align:right}
+
+.ticket{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin-top:22px}
+.tk{display:flex;align-items:center;gap:12px;padding:10px 16px 10px 10px;border-radius:999px;border:2px solid var(--orange);background:rgba(255,138,31,.07)}
+html[dir=rtl] .tk{padding:10px 10px 10px 16px}
+.tk .ic{width:40px;height:40px;border-radius:50%;background:var(--orange);display:grid;place-items:center;flex:none}
+.tk .t1{font-family:'Barlow Condensed';font-weight:800;font-size:22px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.tk .t2{font-size:12px;color:var(--muted);font-weight:700}
+.tk.cy{border-color:rgba(159,243,255,.45);background:rgba(159,243,255,.06)}
+.tk.cy .ic{background:transparent;border:2px solid var(--cyan)}
+
+.count{margin-top:22px;padding:18px;border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(135deg,rgba(18,60,156,.35),rgba(10,166,201,.12))}
+.count .lbl{font-size:13px;font-weight:800;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase}
+html[lang=ar] .count .lbl{letter-spacing:0;font-size:14px}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;direction:ltr}
+.cd div{text-align:center;padding:10px 0;border-radius:14px;background:rgba(0,10,22,.55);border:1px solid rgba(255,255,255,.08)}
+.cd b{display:block;font-family:'Barlow Condensed';font-weight:900;font-size:clamp(34px,9vw,52px);line-height:1}
+.cd small{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.live-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#e11d48;font-weight:800;font-size:14px}
+.live-pill:before{content:"";width:9px;height:9px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#fff;cursor:pointer;transition:.2s}
+.btn:hover{background:rgba(255,255,255,.12)}
+.btn.or{background:var(--orange);border-color:var(--orange)}
+.btn.or:hover{background:#ff9d40}
+
+/* objectives */
+.obj{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ob{padding:18px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);position:relative;overflow:hidden}
+.ob:after{content:"";position:absolute;inset:auto -30px -30px auto;width:110px;height:110px;border-radius:50%;border:1px dashed rgba(159,243,255,.22)}
+.ob b{font-family:'JetBrains Mono';color:var(--orange);font-size:13px;letter-spacing:.2em}
+.ob h3{margin:6px 0 2px;font-family:'Barlow Condensed';font-weight:800;font-size:clamp(21px,5.6vw,28px);letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.ob p{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+/* agenda */
+.tl{position:relative;margin:0;padding:0;list-style:none}
+.tl:before{content:"";position:absolute;top:8px;bottom:8px;inset-inline-start:74px;width:2px;background:linear-gradient(var(--orange),var(--cyan2) 60%,rgba(127,240,255,.1))}
+.it{position:relative;display:grid;grid-template-columns:62px 1fr;gap:24px;padding:6px 0}
+.it .tm{direction:ltr;text-align:end;font-family:'JetBrains Mono';font-weight:700;font-size:14px;color:var(--cyan);padding-top:16px}
+html[dir=rtl] .it .tm{text-align:left}
+.it .dot{position:absolute;inset-inline-start:68px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--cyan2)}
+.it.mod .dot{border-color:var(--orange)}
+.it.brk .dot{border-color:var(--gold)}
+.ag{border-radius:16px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:.3s}
+.ag summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.ag summary::-webkit-details-marker{display:none}
+.ag .ty{font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.06em;text-transform:uppercase}
+.mod .ty{background:rgba(255,138,31,.18);color:#ffb470}
+.st .ty{background:rgba(127,240,255,.14);color:var(--cyan)}
+.brk .ty,.gen .ty{background:rgba(255,207,107,.14);color:var(--gold)}
+.ag .nm{font-weight:800;font-size:15.5px;line-height:1.35;flex:1}
+.ag .chev{transition:.3s;opacity:.6;flex:none}
+.ag[open] .chev{transform:rotate(180deg)}
+.ag .ds{padding:0 16px 14px;color:var(--muted);font-size:14px}
+.ag .ds ul{margin:4px 0 0;padding-inline-start:18px}
+.it.now .ag{border-color:var(--orange);background:linear-gradient(135deg,rgba(255,138,31,.2),rgba(255,138,31,.04));box-shadow:0 0 0 4px rgba(255,138,31,.12)}
+.it.now .dot{background:var(--orange);border-color:#fff;box-shadow:0 0 0 6px rgba(255,138,31,.25);animation:pulse 1.4s infinite}
+.it.done{opacity:.5}
+.nowtag{display:none;font-size:11px;font-weight:900;background:#e11d48;color:#fff;padding:3px 8px;border-radius:6px;letter-spacing:.08em}
+.it.now .nowtag{display:inline-block}
+.nextbar{display:none;margin-bottom:16px;padding:14px 16px;border-radius:16px;border:1px solid var(--orange);background:rgba(255,138,31,.08);font-weight:700}
+.nextbar.show{display:block}
+
+/* groups */
+.finder{display:grid;gap:16px}
+.search{position:relative}
+.search input{width:100%;padding:14px 46px 14px 16px;border-radius:14px;border:1px solid rgba(159,243,255,.3);background:rgba(255,255,255,.06);color:#fff;font:inherit;font-size:16px;outline:none}
+html[dir=rtl] .search input{padding:14px 16px 14px 46px}
+.search input:focus{border-color:var(--orange)}
+.search svg{position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:14px;opacity:.6}
+.gtabs{display:flex;gap:8px;flex-wrap:wrap}
+.gtabs button{border:1px solid var(--line);background:none;padding:6px 14px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer;color:var(--muted)}
+.gtabs button.on{color:#fff;border-color:#fff;background:rgba(255,255,255,.1)}
+.gtabs i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:6px}
+.names{display:grid;grid-template-columns:1fr;gap:8px;max-height:430px;overflow:auto;padding-inline-end:4px}
+.nm-b{display:flex;align-items:center;gap:12px;width:100%;text-align:start;padding:11px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);cursor:pointer;transition:.2s}
+.nm-b:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.07)}
+.nm-b .sw{width:10px;height:34px;border-radius:5px;flex:none}
+.nm-b .n1{font-weight:700;font-size:15px;line-height:1.3}
+.nm-b .n2{font-size:12px;color:var(--muted);direction:ltr;text-align:start}
+html[dir=rtl] .nm-b .n2{text-align:right}
+.nm-b .gid{margin-inline-start:auto;font-family:'JetBrains Mono';font-size:12px;color:var(--muted);direction:ltr;flex:none}
+.empty{padding:20px;text-align:center;color:var(--muted)}
+
+.idcard{border-radius:22px;padding:22px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.18);background:linear-gradient(140deg,#0A1650,#123C9C 60%,#0AA6C9);display:none}
+.idcard.show{display:block;animation:pop .45s ease}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+.idcard .band{position:absolute;inset:0 0 auto 0;height:8px}
+.idcard .hi{font-size:14px;color:rgba(255,255,255,.85);font-weight:700}
+.idcard .nmx{font-size:22px;font-weight:900;line-height:1.3;margin-top:2px}
+.idcard .nmy{font-size:13px;color:rgba(255,255,255,.75);direction:ltr;text-align:start}
+html[dir=rtl] .idcard .nmy{text-align:right}
+.idcard .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.idcard .box{flex:1;min-width:130px;padding:12px 14px;border-radius:14px;background:rgba(0,10,22,.4);border:1px solid rgba(255,255,255,.14)}
+.idcard .box small{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;color:rgba(255,255,255,.7);text-transform:uppercase}
+.idcard .box b{font-family:'JetBrains Mono';font-size:22px;direction:ltr;display:block}
+.idcard .gpill{display:inline-flex;align-items:center;gap:8px;font-family:'Barlow Condensed';font-weight:900;font-size:26px}
+.idcard .gpill i{width:16px;height:16px;border-radius:50%}
+.idcard .mates{margin-top:14px;font-size:13px}
+.idcard .mates h4{margin:0 0 6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.idcard .mates ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.idcard .mates li{padding:4px 10px;border-radius:999px;background:rgba(0,10,22,.35);font-size:12.5px}
+.idcard .x{position:absolute;top:14px;inset-inline-end:14px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,10,22,.4);cursor:pointer;font-size:18px;line-height:1}
+.idcard .note{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.8)}
+
+/* instructor */
+.inst{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:22px;border-radius:28px;background:linear-gradient(110deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.18)}
+.ph{width:124px;height:124px;border-radius:50%;padding:5px;background:linear-gradient(135deg,var(--gold),var(--orange));flex:none}
+.ph img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid var(--bg)}
+.inst .role{display:inline-block;padding:3px 10px;border-radius:8px;background:rgba(255,255,255,.14);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+html[lang=ar] .inst .role{letter-spacing:0}
+.inst h3{margin:8px 0 4px;font-family:'Barlow Condensed',Cairo;font-weight:800;font-size:clamp(30px,7vw,42px);line-height:1.05}
+html[lang=ar] .inst h3{font-family:Cairo;font-weight:900;font-size:clamp(24px,6vw,34px)}
+.inst p{margin:0;color:#dbe8f7;font-size:15px}
+
+/* hamilton */
+.ham{display:grid;gap:20px}
+.hcard{padding:22px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.hcard .hl{height:30px;width:auto;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+.stat{padding:14px;border-radius:16px;background:rgba(0,10,22,.5);border:1px solid rgba(255,255,255,.08)}
+.stat b{display:block;font-family:'Barlow Condensed';font-weight:900;font-size:34px;line-height:1;color:var(--cyan);direction:ltr;text-align:start}
+html[dir=rtl] .stat b{text-align:right}
+.stat span{font-size:13px;color:var(--muted)}
+.htl{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x mandatory}
+.htl::-webkit-scrollbar{height:6px}.htl::-webkit-scrollbar-thumb{background:rgba(159,243,255,.25);border-radius:9px}
+.yr{flex:0 0 220px;scroll-snap-align:start;padding:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line);position:relative}
+.yr b{font-family:'Barlow Condensed';font-weight:900;font-size:36px;color:var(--orange);line-height:1}
+.yr p{margin:6px 0 0;font-size:14px;color:#d6e4f5}
+
+.c6{display:grid;gap:18px;align-items:center}
+.c6img{position:relative;width:min(100%,360px);margin:0 auto;aspect-ratio:760/1571}
+.c6img img{width:100%;height:100%;object-fit:contain}
+.hs{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:2px solid #fff;background:var(--orange);color:#fff;font-weight:900;font-size:14px;cursor:pointer;display:grid;place-items:center;font-family:'JetBrains Mono'}
+.hs:before{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(255,138,31,.6);animation:ring 1.8s infinite}
+@keyframes ring{from{transform:scale(.7);opacity:1}to{transform:scale(1.5);opacity:0}}
+.hs.on{background:var(--cyan2);color:var(--bg)}
+.feat{display:grid;gap:10px}
+.fx{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:.25s}
+.fx.on{border-color:var(--cyan2);background:rgba(127,240,255,.08)}
+.fx h4{margin:0;display:flex;gap:10px;align-items:center;font-size:16px}
+.fx h4 i{font-style:normal;font-family:'JetBrains Mono';font-size:12px;width:24px;height:24px;border-radius:50%;background:var(--orange);display:grid;place-items:center;flex:none}
+.fx p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chips span{padding:6px 12px;border-radius:999px;border:1px solid rgba(159,243,255,.25);font-size:13px;font-weight:700;direction:ltr}
+.src{font-size:12px;color:var(--muted);margin-top:12px}
+
+.rt{display:flex;align-items:center;gap:18px;padding:20px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.rt img{height:74px;width:auto;flex:none}
+.rt h3{margin:0;font-size:20px}
+.rt p{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+/* glossary */
+.gl{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.fc{perspective:900px;height:178px;cursor:pointer}
+.fc .in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.fc.flip .in{transform:rotateY(180deg)}
+.fc .f,.fc .b{position:absolute;inset:0;border-radius:18px;padding:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column}
+.fc .f{background:linear-gradient(150deg,#0A1650,#123C9C);border:1px solid rgba(159,243,255,.22);justify-content:space-between}
+.fc .f b{font-family:'Barlow Condensed';font-weight:900;font-size:40px;line-height:1;direction:ltr;text-align:start}
+html[dir=rtl] .fc .f b{text-align:right}
+.fc .f span{font-size:12.5px;color:var(--cyan);font-weight:700;direction:ltr;text-align:start}
+html[dir=rtl] .fc .f span{text-align:right}
+.fc .f em{font-style:normal;font-size:11px;color:var(--muted);font-weight:700}
+.fc .b{transform:rotateY(180deg);background:#0d1b33;border:1px solid var(--orange);font-size:13px;line-height:1.55;overflow:auto}
+.fc .b strong{color:var(--orange);font-size:13px;direction:ltr}
+
+/* people */
+.ppl h3{margin:26px 0 12px;font-size:14px;font-weight:800;color:var(--orange);letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+html[lang=ar] .ppl h3{letter-spacing:0;font-size:16px}
+.ppl h3:after{content:"";flex:1;height:1px;background:var(--line)}
+.pg{display:grid;gap:14px}
+.pp{display:flex;align-items:center;gap:14px}
+.pp .ph{width:84px;height:84px;padding:4px}
+.pp .ph img{border-width:3px}
+.pp b{display:block;font-size:16px;line-height:1.3}
+.pp span{display:block;font-size:13px;color:#bcd2ea;line-height:1.4;margin-top:2px}
+
+/* after */
+.after{display:grid;gap:12px}
+.af{display:flex;gap:14px;padding:18px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.af .ic{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;background:rgba(255,138,31,.15);border:1px solid rgba(255,138,31,.4)}
+.af h4{margin:0;font-size:16px}
+.af p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.soon{display:inline-block;margin-top:8px;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;background:rgba(159,243,255,.12);color:var(--cyan);letter-spacing:.06em}
+.hash{margin-top:18px;padding:26px 20px;border-radius:24px;text-align:center;background:linear-gradient(135deg,rgba(255,138,31,.18),rgba(10,166,201,.15));border:1px solid rgba(255,255,255,.15)}
+.hash .big{font-family:'Barlow Condensed';font-weight:900;font-size:clamp(46px,13vw,84px);line-height:1;direction:ltr}
+.hash .big b{color:var(--orange)}
+.hash p{color:#dbe8f7;margin:8px 0 0}
+
+footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px}
+footer .fl{display:flex;justify-content:center;align-items:center;gap:16px;direction:ltr;margin-bottom:14px;flex-wrap:wrap}
+footer .fl img{height:30px;width:auto;opacity:.9}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);opacity:0;background:#fff;color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:800;transition:.3s;z-index:99}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (min-width:760px){
+  .hero-grid{grid-template-columns:1.05fr .95fr;align-items:center}
+  .obj{grid-template-columns:repeat(4,1fr)}
+  .names{grid-template-columns:1fr 1fr}
+  .finder{grid-template-columns:1fr}
+  .ham{grid-template-columns:1fr}
+  .c6{grid-template-columns:.8fr 1.2fr}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .gl{grid-template-columns:repeat(4,1fr)}
+  .pg{grid-template-columns:repeat(3,1fr)}
+  .after{grid-template-columns:repeat(3,1fr)}
+  .af{flex-direction:column}
+  .top .logos img{height:32px}.top .logos .rt{height:38px}
+}
+@media (max-width:420px){
+  .top .tag{font-size:16px}
+  .top .logos img{height:20px}.top .logos .rt{height:24px}
+  .top .logos .h{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="amb" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i>
+<svg><defs><pattern id="pl" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M23 30h14M30 23v14" stroke="#9ff3ff" stroke-width="1.2" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#pl)"/></svg></div>
+
+<header class="top">
+  <div class="logos">
+    <img src="delta_w.png" alt="Delta University for Science and Technology">
+    <span class="sep h"></span>
+    <img class="h" src="hamilton_w.png" alt="Hamilton Medical" style="height:18px">
+    <img class="rt h" src="rtpower_w.png" alt="RT Power">
+  </div>
+  <div class="tag"><b>#</b>DeltaMV2026</div>
+  <div class="langbtn" role="group" aria-label="Language">
+    <button data-l="ar">ع</button><button data-l="en">EN</button>
+  </div>
+</header>
+<nav class="nav" id="nav">
+  <a href="#agenda"><span class="ar">الأجندة</span><span class="en">Agenda</span></a>
+  <a href="#group"><span class="ar">اعرف جروبك</span><span class="en">My group</span></a>
+  <a href="#instructor"><span class="ar">المحاضر</span><span class="en">Instructor</span></a>
+  <a href="#hamilton"><span class="ar">Hamilton Medical</span><span class="en">Hamilton Medical</span></a>
+  <a href="#glossary"><span class="ar">مصطلحات</span><span class="en">Glossary</span></a>
+  <a href="#organizers"><span class="ar">المنظمون</span><span class="en">Organizers</span></a>
+  <a href="#after"><span class="ar">بعد الورشة</span><span class="en">After</span></a>
+</nav>
+
+<main class="wrap">
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div class="rv">
+      <div class="organized"><span class="ar">تنظيم</span><span class="en">Organized by</span></div>
+      <div class="dept"><span class="ar">قسم تكنولوجيا الطوارئ والرعاية الحرجة</span><span class="en">Emergency &amp; Critical Care Technology Department</span></div>
+      <h1 class="title"><span class="sm">Hands-on Workshop</span><span>Mechanical</span><span class="v">Ventilation</span></h1>
+      <p class="title-ar"><span class="ar">ورشة عملية في التنفس الصناعي</span><span class="en">In collaboration with Hamilton Medical &amp; RT Power</span></p>
+
+      <div class="ticket">
+        <div class="tk"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+          <div><div class="t1 ltr">MON · 07 DEC 2026</div><div class="t2"><span class="ar">الإثنين ٧ ديسمبر</span><span class="en">9:30 AM – 4:30 PM</span></div></div></div>
+        <div class="tk cy"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ff3ff" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><div class="t1 ltr">9:30 AM</div><div class="t2"><span class="ar">بداية التسجيل</span><span class="en">Registration opens</span></div></div></div>
+        <div class="tk cy"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ff3ff" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <div><div class="t1 ltr">SKILL LAB 401</div><div class="t2"><span class="ar">المكان</span><span class="en">Venue</span></div></div></div>
+      </div>
+
+      <div class="count" id="countbox">
+        <div class="lbl" id="cdlbl"><span class="ar">باقي على الورشة</span><span class="en">Workshop starts in</span></div>
+        <div class="cd" id="cd">
+          <div><b id="cdD">--</b><small><span class="ar">يوم</span><span class="en">Days</span></small></div>
+          <div><b id="cdH">--</b><small><span class="ar">ساعة</span><span class="en">Hours</span></small></div>
+          <div><b id="cdM">--</b><small><span class="ar">دقيقة</span><span class="en">Min</span></small></div>
+          <div><b id="cdS">--</b><small><span class="ar">ثانية</span><span class="en">Sec</span></small></div>
+        </div>
+        <div id="livebox" style="display:none;margin-top:6px"></div>
+        <div class="btns">
+          <a class="btn or" id="gcal" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M12 13v5M9.5 15.5h5"/></svg><span class="ar">أضف للتقويم</span><span class="en">Add to calendar</span></a>
+          <a class="btn" href="#agenda"><span class="ar">شوف الأجندة</span><span class="en">See agenda</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="dev rv" aria-hidden="true">
+      <svg class="ring" viewBox="0 0 460 515">
+        <g fill="none" stroke="#9ff3ff">
+          <circle cx="230" cy="250" r="170" opacity=".28" stroke-width="1.2"/>
+          <circle cx="230" cy="250" r="200" opacity=".25" stroke-dasharray="2 9"/>
+          <g class="spin"><circle cx="230" cy="250" r="226" opacity=".35" stroke-width="1" stroke-dasharray="1 13" stroke-linecap="round"/></g>
+          <path d="M4 250 A226 226 0 0 1 230 24" stroke="#FF8A1F" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="shadow"></div>
+      <img src="vent.webp" alt="HAMILTON-C6">
+      <div class="call l c1"><b>01</b><span>Understand</span></div>
+      <div class="call c2"><b>02</b><span>Initiate</span></div>
+      <div class="call l c3"><b>03</b><span>Troubleshoot</span></div>
+      <div class="call c4"><b>04</b><span>Wean</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIVES -->
+<section id="objectives" style="padding-top:30px">
+  <div class="kick rv"><span class="ar">هتخرج من الورشة قادر إنك</span><span class="en">By the end of the day</span></div>
+  <div class="obj" style="margin-top:16px">
+    <div class="ob rv"><b>01</b><h3>Understand</h3><p><span class="ar">المبادئ الأساسية وأوضاع التنفس الصناعي</span><span class="en">Core principles &amp; modes</span></p></div>
+    <div class="ob rv"><b>02</b><h3>Initiate</h3><p><span class="ar">الإعدادات الأولية الآمنة للمريض</span><span class="en">Safe initial settings</span></p></div>
+    <div class="ob rv"><b>03</b><h3>Troubleshoot</h3><p><span class="ar">الإنذارات والمشكلات الشائعة وحلها</span><span class="en">Alarms &amp; common problems</span></p></div>
+    <div class="ob rv"><b>04</b><h3>Wean</h3><p><span class="ar">تقييم الجاهزية والفطام الآمن</span><span class="en">Readiness &amp; safe liberation</span></p></div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <div class="kick rv"><span class="ar">برنامج اليوم</span><span class="en">Day programme</span></div>
+  <h2 class="rv"><span class="ar">أجندة <span class="c">الورشة</span></span><span class="en">Workshop <span class="c">Agenda</span></span></h2>
+  <p class="sub rv"><span class="ar">اضغط على أي فقرة لتفاصيلها. يوم الورشة، الفقرة الحالية بتنوّر لوحدها.</span><span class="en">Tap any item for details. On the day, the current session lights up automatically.</span></p>
+  <div class="nextbar" id="nextbar"></div>
+  <ol class="tl" id="tl"></ol>
+</section>
+
+<!-- GROUP FINDER -->
+<section id="group">
+  <div class="kick rv"><span class="ar">الجروبات</span><span class="en">Groups</span></div>
+  <h2 class="rv"><span class="ar">اعرف <span class="c">جروبك</span></span><span class="en">Find <span class="c">your group</span></span></h2>
+  <p class="sub rv"><span class="ar">دوّر على اسمك واضغط عليه، هيظهر لك الـ ID ولون جروبك وزمايلك في نفس الجروب.</span><span class="en">Search for your name and tap it to see your ID, group colour and teammates.</span></p>
+  <div class="finder">
+    <div class="idcard" id="idcard" aria-live="polite"></div>
+    <div class="search rv">
+      <input id="q" type="search" autocomplete="off" placeholder="Type your name…">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    </div>
+    <div class="gtabs rv" id="gtabs"></div>
+    <div class="names" id="names"></div>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instructor">
+  <div class="kick rv"><span class="ar">المحاضر</span><span class="en">Clinical instructor</span></div>
+  <div class="inst rv" style="margin-top:16px">
+    <div class="ph"><img src="amin.jpg" alt="Dr. Mohamed Amin"></div>
+    <div>
+      <span class="role"><span class="ar">المحاضر الإكلينيكي</span><span class="en">Clinical Instructor</span></span>
+      <h3><span class="ar">د. محمد أمين</span><span class="en">Dr. Mohamed Amin</span></h3>
+      <p><span class="ar">أستاذ مساعد طب الرعاية الحرجة<br>كلية طب قصر العيني، جامعة القاهرة</span><span class="en">Associate Professor of Critical Care Medicine<br>Kasr AlAiny School of Medicine, Cairo University</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- HAMILTON -->
+<section id="hamilton">
+  <div class="kick rv"><span class="ar">شريك الورشة</span><span class="en">Workshop partner</span></div>
+  <h2 class="rv">Hamilton <span class="c">Medical</span></h2>
+  <p class="sub rv"><span class="ar">شركة سويسرية متخصصة في أجهزة التنفس الصناعي الذكية للرعاية المركزة، وهدفها إن الفرق الطبية تقدّم أفضل رعاية تنفسية لأي مريض في أي مكان.</span><span class="en">A Swiss company dedicated to intelligent ICU ventilation, with the mission of helping medical teams deliver the best respiratory care to anyone, anywhere.</span></p>
+
+  <div class="ham">
+    <div class="hcard rv">
+      <img class="hl" src="hamilton_w.png" alt="Hamilton Medical">
+      <div class="stats">
+        <div class="stat"><b>1983</b><span><span class="ar">سنة التأسيس</span><span class="en">Founded</span></span></div>
+        <div class="stat"><b>CH</b><span><span class="ar">بونادوز، سويسرا</span><span class="en">Bonaduz, Switzerland</span></span></div>
+        <div class="stat"><b>40+</b><span><span class="ar">سنة في التنفس الصناعي</span><span class="en">Years in ventilation</span></span></div>
+        <div class="stat"><b>ASV®</b><span><span class="ar">رائدة التنفس الصناعي الذكي</span><span class="en">Pioneer of intelligent ventilation</span></span></div>
+      </div>
+    </div>
+
+    <div class="rv">
+      <div class="kick" style="margin-bottom:12px"><span class="ar">محطات في تاريخ الشركة ←</span><span class="en">Milestones →</span></div>
+      <div class="htl">
+        <div class="yr"><b>1983</b><p><span class="ar">تأسيس Hamilton Medical AG في بونادوز بسويسرا (١٨ مايو).</span><span class="en">Hamilton Medical AG founded near Bonaduz, Switzerland (18 May).</span></p></div>
+        <div class="yr"><b>1984</b><p><span class="ar">جهاز VEOLAR: أول جهاز تنفس صناعي يتحكم فيه microprocessor.</span><span class="en">VEOLAR: the first ventilator controlled by a microprocessor.</span></p></div>
+        <div class="yr"><b>1990s</b><p><span class="ar">ظهور ASV (Adaptive Support Ventilation): الجهاز يتكيف مع ميكانيكا رئة المريض.</span><span class="en">ASV (Adaptive Support Ventilation) adapts to the patient's lung mechanics.</span></p></div>
+        <div class="yr"><b>2010</b><p><span class="ar">INTELLiVENT-ASV مع جهاز HAMILTON-S1: تحكم آلي في التهوية والأكسجة حسب أهداف الطبيب.</span><span class="en">INTELLiVENT-ASV launched with HAMILTON-S1: automated control of ventilation and oxygenation to clinician targets.</span></p></div>
+        <div class="yr"><b>2017</b><p><span class="ar">إطلاق HAMILTON-C6 ومعاه IntelliSync+ لتزامن المريض مع الجهاز لحظيًا.</span><span class="en">HAMILTON-C6 launched, introducing IntelliSync+ real-time patient synchronization.</span></p></div>
+        <div class="yr"><b>2025</b><p><span class="ar">الجيل الجديد من HAMILTON-C6: واجهة "Ventilation Cockpit" بتتبع رحلة المريض من الدخول للفطام.</span><span class="en">The new HAMILTON-C6 "Ventilation Cockpit", built around the patient journey from admission to weaning.</span></p></div>
+      </div>
+    </div>
+
+    <div class="hcard rv">
+      <div class="kick"><span class="ar">الجهاز اللي هنتدرب عليه</span><span class="en">The ventilator you'll train on</span></div>
+      <h2 style="margin-top:6px">HAMILTON-<span class="c">C6</span></h2>
+      <p class="sub" style="margin-bottom:10px"><span class="ar">اضغط على النقط على الجهاز أو على أي ميزة.</span><span class="en">Tap the dots on the device or any feature.</span></p>
+      <div class="c6">
+        <div class="c6img">
+          <img src="vent.webp" alt="HAMILTON-C6 ICU ventilator">
+          <button class="hs" data-f="0" style="left:43%;top:20%">1</button>
+          <button class="hs" data-f="1" style="left:47%;top:45%">2</button>
+          <button class="hs" data-f="2" style="left:38%;top:63%">3</button>
+          <button class="hs" data-f="3" style="left:52%;top:86%">4</button>
+        </div>
+        <div class="feat" id="feat">
+          <div class="fx" data-f="0"><h4><i>1</i><span class="ar">شاشة "Ventilation Cockpit"</span><span class="en">The ventilation cockpit</span></h4>
+            <p><span class="ar">شاشة قابلة للتخصيص، فيها أكتر من ٥٠ parameter للمراقبة، و trends لمدة ٧٢ ساعة، و Dynamic Lung اللي بيعرض ميكانيكا الرئة بشكل مرئي لحظة بلحظة.</span><span class="en">Configurable screen with 50+ monitoring parameters, 72-hour trends and the Dynamic Lung, a real-time visual of lung mechanics.</span></p></div>
+          <div class="fx" data-f="1"><h4><i>2</i><span class="ar">تربينة عالية الأداء</span><span class="en">High-performance turbine</span></h4>
+            <p><span class="ar">الجهاز مش محتاج مصدر هواء مضغوط من الحيطة ولا compressor خارجي، وبيدّي peak flow لحد 260 L/min.</span><span class="en">Fully independent of wall air and external compressors, with a peak flow of 260 L/min.</span></p></div>
+          <div class="fx" data-f="2"><h4><i>3</i><span class="ar">ترطيب مدمج HAMILTON-H900</span><span class="en">Integrated H900 humidifier</span></h4>
+            <p><span class="ar">بتتحكم في جهاز الترطيب من شاشة الـ ventilator نفسها، وبيختار وضع الترطيب تلقائيًا حسب وضع التنفس.</span><span class="en">Humidifier controls on the ventilator display; it selects the humidification mode automatically based on the ventilation mode.</span></p></div>
+          <div class="fx" data-f="3"><h4><i>4</i><span class="ar">لكل المرضى، وبهدوء</span><span class="en">For every patient, quietly</span></h4>
+            <p><span class="ar">بيشتغل مع البالغين والأطفال وحديثي الولادة، ومتوسط صوته حوالي 35 dB، فهو من أهدى أجهزة الشركة.</span><span class="en">Adult, paediatric and neonatal patients, with an average noise level of about 35 dB, making it one of the quietest ICU ventilators in the range.</span></p></div>
+          <div>
+            <div class="kick" style="margin-top:6px"><span class="ar">أوضاع وأدوات</span><span class="en">Modes &amp; tools</span></div>
+            <div class="chips"><span>ASV®</span><span>INTELLiVENT®-ASV</span><span>IntelliSync®+</span><span>P/V Tool® Pro</span><span>NIV</span><span>High-flow O₂</span><span>Esophageal pressure</span><span>Capnography · SpO₂</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="src"><span class="ar">المصدر: الموقع الرسمي لـ Hamilton Medical (hamilton-medical.com).</span><span class="en">Source: Hamilton Medical official website (hamilton-medical.com).</span></div>
+    </div>
+
+    <div class="rt rv">
+      <img src="rtpower_w.png" alt="RT Power">
+      <div><h3>RT Power</h3><p><span class="ar">شريك تنظيم الورشة بالتعاون مع Hamilton Medical.</span><span class="en">Co-organizing partner of the workshop, together with Hamilton Medical.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary">
+  <div class="kick rv"><span class="ar">جهّز نفسك</span><span class="en">Warm up</span></div>
+  <h2 class="rv"><span class="ar">مصطلحات <span class="c">لازم تعرفها</span></span><span class="en">Key <span class="c">terms</span></span></h2>
+  <p class="sub rv"><span class="ar">اقلب الكارت عشان تشوف التعريف.</span><span class="en">Tap a card to flip it.</span></p>
+  <div class="gl" id="gl"></div>
+</section>
+
+<!-- ORGANIZERS -->
+<section id="organizers" class="ppl">
+  <div class="kick rv"><span class="ar">المنظمون</span><span class="en">Organizers</span></div>
+  <h3 class="rv"><span class="ar">تحت رعاية</span><span class="en">Under the patronage of</span></h3>
+  <div class="pg">
+    <div class="pp rv"><div class="ph"><img src="rabie.jpg" alt=""></div><div><b><span class="ar">د. محمد ربيع ناصر</span><span class="en">Dr. Mohamed Rabie Naser</span></b><span><span class="ar">رئيس مجلس الأمناء</span><span class="en">Chairman of the Board of Trustees</span></span></div></div>
+    <div class="pp rv"><div class="ph"><img src="mashad.jpg" alt=""></div><div><b><span class="ar">أ.د. يحيى عبد العظيم المشد</span><span class="en">Prof. Yehia Abd-Elazim El-Mashad</span></b><span><span class="ar">رئيس جامعة الدلتا للعلوم والتكنولوجيا</span><span class="en">President of Delta University for Science and Technology</span></span></div></div>
+    <div class="pp rv"><div class="ph"><img src="nagar.jpg" alt=""></div><div><b><span class="ar">أ.د. محمد محمد النجار</span><span class="en">Prof. Mohamed Mohamed Al Nagar</span></b><span><span class="ar">نائب رئيس الجامعة لشئون التعليم والطلاب</span><span class="en">Vice President for Education and Student Affairs</span></span></div></div>
+  </div>
+  <h3 class="rv"><span class="ar">اللجنة المنظمة</span><span class="en">Organizing committee</span></h3>
+  <div class="pg">
+    <div class="pp rv"><div class="ph"><img src="yaser.jpg" alt=""></div><div><b><span class="ar">أ.د. ياسر مصطفى إسماعيل</span><span class="en">Prof. Yaser Mostafa Ismael</span></b><span><span class="ar">عميد كلية تكنولوجيا العلوم الصحية التطبيقية</span><span class="en">Dean of the Faculty of Applied Health Science Technology</span></span></div></div>
+    <div class="pp rv"><div class="ph"><img src="mona.jpg" alt=""></div><div><b><span class="ar">أ.د. منى بلوغ المراد</span><span class="en">Prof. Mona Blough El-Morad</span></b><span><span class="ar">رئيس قسم تكنولوجيا الطوارئ والرعاية الحرجة</span><span class="en">Head of the Emergency &amp; Critical Care Technology Dept.</span></span></div></div>
+    <div class="pp rv"><div class="ph"><img src="inas.jpg" alt=""></div><div><b><span class="ar">د. إيناس رضوان</span><span class="en">Dr. Inas Radwan</span></b><span><span class="ar">منسق برنامج تكنولوجيا الطوارئ والرعاية الحرجة</span><span class="en">Coordinator, Emergency &amp; Critical Care Technology Program</span></span></div></div>
+  </div>
+</section>
+
+<!-- AFTER -->
+<section id="after">
+  <div class="kick rv"><span class="ar">بعد الورشة</span><span class="en">After the workshop</span></div>
+  <h2 class="rv"><span class="ar">مش <span class="c">آخر اليوم</span></span><span class="en">Not the <span class="c">end of the day</span></span></h2>
+  <div class="after">
+    <div class="af rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF8A1F" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
+      <div><h4><span class="ar">الاختبار البعدي والتقييم</span><span class="en">Post-test &amp; feedback</span></h4><p><span class="ar">آخر اليوم هتحل الـ post-test وتقيّم الورشة، رأيك بيفرق في الورش الجاية.</span><span class="en">At the end of the day you'll take the post-test and rate the workshop. Your feedback shapes the next one.</span></p><span class="soon" id="ptsoon"><span class="ar">يتفتح يوم الورشة</span><span class="en">Opens on workshop day</span></span></div></div>
+    <div class="af rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF8A1F" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></div>
+      <div><h4><span class="ar">الشهادات</span><span class="en">Certificates</span></h4><p><span class="ar">الشهادات بتتسلّم في نهاية اليوم بعد الـ post-test، ومعاها الصورة الجماعية.</span><span class="en">Certificates are handed out at the end of the day after the post-test, followed by the group photo.</span></p></div></div>
+    <div class="af rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF8A1F" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg></div>
+      <div><h4><span class="ar">صور الورشة</span><span class="en">Workshop photos</span></h4><p><span class="ar">صور اليوم هتتنزل هنا على نفس اللينك، فاحتفظ بالـ QR.</span><span class="en">Photos from the day will be posted here on the same link, so keep the QR.</span></p><span class="soon"><span class="ar">بعد ٧ ديسمبر</span><span class="en">After 7 Dec</span></span></div></div>
+  </div>
+  <div class="hash rv">
+    <div class="big"><b>#</b>DeltaMV2026</div>
+    <p><span class="ar">شارك صورك ولحظاتك من الورشة بالهاشتاج</span><span class="en">Share your moments from the workshop with the hashtag</span></p>
+    <div class="btns" style="justify-content:center">
+      <button class="btn or" id="copytag"><span class="ar">انسخ الهاشتاج</span><span class="en">Copy hashtag</span></button>
+      <button class="btn" id="copylink"><span class="ar">انسخ لينك الصفحة</span><span class="en">Copy page link</span></button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="fl"><img src="delta_w.png" alt="Delta University"><img src="hamilton_w.png" alt="Hamilton Medical" style="height:20px"><img src="rtpower_w.png" alt="RT Power" style="height:40px"></div>
+  <div><span class="ar">قسم تكنولوجيا الطوارئ والرعاية الحرجة · كلية تكنولوجيا العلوم الصحية التطبيقية · جامعة الدلتا للعلوم والتكنولوجيا</span><span class="en">ECC Department · Faculty of Applied Health Sciences Technology · Delta University for Science and Technology</span></div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- language ---------- */
+function setLang(l){
+  document.documentElement.lang=l; document.documentElement.dir=l==='ar'?'rtl':'ltr';
+  $$('.langbtn button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  store.set('mvlang',l); renderAgenda(); renderGlossary(); renderNames(); if(current) showCard(current,false);
+}
+$$('.langbtn button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+const L=()=>document.documentElement.lang;
+
+/* ---------- time ---------- */
+const T=s=>new Date('2026-12-07T'+s+':00+02:00').getTime();
+const START=T('09:30'), END=T('16:30');
+let demoOffset=0;
+if(location.hash==='#demo'){demoOffset=T('11:50')-Date.now();}
+const now=()=>Date.now()+demoOffset;
+
+/* ---------- agenda ---------- */
+const AG=[
+ ['09:30','10:00','gen','Registration & pre-test','التسجيل والاختبار القبلي','استلام الكارنيه (فيه الـ ID ولون جروبك) وحل الـ pre-test.','Collect your badge (with your ID and group colour) and take the pre-test.'],
+ ['10:00','10:30','mod','Module 1 · Introduction to mechanical ventilation','الموديول ١ · مقدمة في التنفس الصناعي','إمتى نحتاج التنفس الصناعي، الفرق بين الضغط والحجم، والأوضاع الأساسية.','Indications, pressure vs volume, and the core modes.'],
+ ['10:30','11:15','st','Station 1 · Ventilator familiarization','المحطة ١ · التعرّف على الجهاز','تتعرف على HAMILTON-C6 بإيدك: الدائرة، الـ flow sensor، الشاشة والـ checks قبل التشغيل.','Hands-on with the HAMILTON-C6: circuit, flow sensor, screen and pre-use checks.'],
+ ['11:15','11:45','mod','Module 2 · Initiation of mechanical ventilation','الموديول ٢ · بدء التنفس الصناعي','اختيار الوضع والإعدادات الأولية الآمنة: Vt، RR، PEEP، FiO₂.','Choosing the mode and safe initial settings: Vt, RR, PEEP, FiO₂.'],
+ ['11:45','12:30','st','Station 2 · Settings practice','المحطة ٢ · التدريب على الإعدادات','تضبط الإعدادات على حالات عملية وتشوف تأثيرها على الشاشة.','Set up the ventilator for practical cases and watch the effect on screen.'],
+ ['12:30','12:45','brk','Coffee break','استراحة قهوة','',''],
+ ['12:45','13:15','mod','Module 3 · Optimization & troubleshooting','الموديول ٣ · الضبط الأمثل وحل المشكلات','قراءة الإنذارات، المشاكل الشائعة وإزاي تتعامل معاها خطوة بخطوة.','Reading alarms and handling common problems step by step.'],
+ ['13:15','14:00','st','Station 3 · Troubleshooting practice','المحطة ٣ · تطبيق حل المشكلات','سيناريوهات إنذارات حقيقية تحلها بنفسك على الجهاز.','Real alarm scenarios to solve on the ventilator.'],
+ ['14:00','14:30','mod','Module 4 · Weaning','الموديول ٤ · الفطام من الجهاز','تقييم جاهزية المريض للفطام، الـ SBT، وخطوات الـ liberation الآمن.','Readiness assessment, SBT, and safe liberation.'],
+ ['14:30','15:15','st','Station 4 · Weaning practice','المحطة ٤ · تطبيق الفطام','تطبّق خطوات الفطام على الجهاز.','Practise the weaning steps on the ventilator.'],
+ ['15:15','15:45','gen','Debriefing','المناقشة والتقييم (Debriefing)','مراجعة اللي اتعلمناه طول اليوم والإجابة على الأسئلة.','Review of the day and Q&A.'],
+ ['15:45','16:00','gen','Post-test, certificates & group photo','الاختبار البعدي، الشهادات والصورة الجماعية','',''],
+ ['16:00','16:30','gen','Open discussion','نقاش مفتوح','',''],
+];
+const TY={mod:['Module','موديول'],st:['Station','محطة'],brk:['Break','استراحة'],gen:['Session','فقرة']};
+const fmt=t=>{let[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(m).padStart(2,'0')};
+function renderAgenda(){
+  const ar=L()==='ar', ol=$('#tl'); const open=$$('#tl details[open]').map(d=>d.dataset.i);
+  ol.innerHTML=AG.map((a,i)=>`<li class="it ${a[2]}" data-i="${i}"><div class="tm">${fmt(a[0])}</div><span class="dot"></span>
+   <details class="ag" data-i="${i}" ${open.includes(String(i))?'open':''}><summary><span class="ty">${TY[a[2]][ar?1:0]}</span><span class="nm">${ar?a[4]:a[3]}</span><span class="nowtag">${ar?'الآن':'NOW'}</span>
+   ${(a[5]||a[6])?'<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>':''}</summary>
+   ${(a[5]||a[6])?`<div class="ds">${ar?a[5]:a[6]}<div class="mono" style="margin-top:6px;font-size:12px;direction:ltr;text-align:${ar?'right':'left'}">${fmt(a[0])} – ${fmt(a[1])}</div></div>`:''}</details></li>`).join('');
+  tick();
+}
+
+/* ---------- countdown + live ---------- */
+function tick(){
+  const n=now(), ar=L()==='ar';
+  const box=$('#cd'), lbl=$('#cdlbl'), live=$('#livebox');
+  if(n<START){
+    let d=START-n; const D=Math.floor(d/864e5); d%=864e5; const H=Math.floor(d/36e5); d%=36e5; const M=Math.floor(d/6e4); const S=Math.floor(d%6e4/1e3);
+    $('#cdD').textContent=D; $('#cdH').textContent=String(H).padStart(2,'0'); $('#cdM').textContent=String(M).padStart(2,'0'); $('#cdS').textContent=String(S).padStart(2,'0');
+    box.style.display='';lbl.style.display='';live.style.display='none';
+  }else{
+    box.style.display='none';lbl.style.display='none';live.style.display='block';
+    if(n<END){const cur=AG.find(a=>n>=T(a[0])&&n<T(a[1]));live.innerHTML=`<span class="live-pill">${ar?'الورشة شغالة دلوقتي':'Live now'}</span><div style="margin-top:10px;font-weight:800;font-size:18px">${cur?(ar?cur[4]:cur[3]):''}</div>`;}
+    else live.innerHTML=`<div style="font-weight:900;font-size:22px">${ar?'شكرًا لحضوركم 💙':'Thank you for joining us 💙'}</div><div style="color:var(--muted);margin-top:4px">${ar?'تابع الصور والتقييم تحت.':'Photos & feedback below.'}</div>`;
+  }
+  // agenda states
+  let curI=-1;
+  $$('#tl .it').forEach(li=>{const a=AG[li.dataset.i];const s=T(a[0]),e=T(a[1]);li.classList.toggle('now',n>=s&&n<e);li.classList.toggle('done',n>=e);if(n>=s&&n<e)curI=+li.dataset.i;});
+  const nb=$('#nextbar');
+  if(n>=START&&n<END){const nx=AG.find(a=>T(a[0])>n);nb.classList.add('show');
+    nb.innerHTML=nx?`${ar?'بعدها':'Up next'} <span class="mono" style="color:var(--orange)">${fmt(nx[0])}</span> · ${ar?nx[4]:nx[3]}`:(ar?'آخر فقرة في اليوم':'Last session of the day');}
+  else nb.classList.remove('show');
+}
+setInterval(tick,1000);
+
+/* ---------- Google Calendar ---------- */
+$('#gcal').href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Mechanical Ventilation Workshop #DeltaMV2026')+'&dates=20261207T073000Z/20261207T143000Z&ctz=Africa/Cairo&location='+encodeURIComponent('Skill Lab 401, Delta University for Science and Technology')+'&details='+encodeURIComponent('Hands-on mechanical ventilation workshop, ECC Department, in collaboration with Hamilton Medical & RT Power.');
+
+/* ---------- groups ---------- */
+const G={A:{c:'var(--gA)',hex:'#FF8A1F',ar:'البرتقالي',en:'Orange'},B:{c:'var(--gB)',hex:'#22D3EE',ar:'السماوي',en:'Cyan'},C:{c:'var(--gC)',hex:'#34D399',ar:'الأخضر',en:'Green'},D:{c:'var(--gD)',hex:'#A78BFA',ar:'البنفسجي',en:'Purple'}};
+const S=[
+['MV26-A01','احمد حسام نصير محمد','Ahmed Hossam Noser Mohamed'],['MV26-A02','آسيا احمد عبدالعزيز حامد','Asia Ahmed AbdAlziz Hamed'],['MV26-A03','الاء مسعود ابراهيم','Alaa Masoud Ibrahim'],['MV26-A04','أميرة عبدالله عبدالهادي عبدالله محمود هاشم','Amira Abdallah Abdelhady Abdallah'],['MV26-A05','اميره محمد صلاح الجوهري','Amira Mohamed Salah Elgohry'],['MV26-A06','بسمله احمد احمد عبده عبده رزق','Basmalla Ahmed Ahmed Abdou Abdou Rizk'],['MV26-A07','بسمله انس عبد الستار مختار نصار','Basmala Anas Abd Elsattar'],['MV26-A08','حنين المرسي عطيه المرسي','Haneen Elmorse Atya Elmorse'],
+['MV26-B01','أحمد رمضان عمران','Ahmed Ramadan Omran'],['MV26-B02','دانيه حمدى محمود احمد التلواني','Danyah Hamdy Mahmoud'],['MV26-B03','رحمه سعيد زكريا السيد ابو عيسى','Rahma Saeed Zakeria'],['MV26-B04','رحمه محمود محمد رمضان السبع','Rahma Mahmoud Mohamed Ramadan Elsaba'],['MV26-B05','رغده صلاح مختار عبد اللطيف','Raghda Salah Mokhtar Abdellatif'],['MV26-B06','روان رءوف المحمدي زنفل','Rawan Raouf Zanful'],['MV26-B07','روميساء زكريا متولي محمد حسن سلامه','Romaisaa Zakaria Metwally Salama'],['MV26-B08','ساره مالك السمنودي الشحات أحمد السمنودي','Sara Malek Elsamanody Elshahat'],
+['MV26-C01','سلفانا نصيف يوسف عوض','Selvana Nasif Yousif Awad'],['MV26-C02','شهد احمد محمد السيد هيبه','Shahd Ahmed Mohamed Haiba'],['MV26-C03','علياء أحمد محمود عفيفى','Aliaa Ahmed Mahmoud Afifi'],['MV26-C04','فاطمة ماهر إسماعيل حامد','Fatma Maher Esmail Hamed'],['MV26-C05','مايسة محمد بدوى فتوح قاسم','Maysa Mohamed Badawy Fetoh Kassem'],['MV26-C06','محمد شكري طلعت محمد عطيه خليل','Muhammad Shukri Talaat Muhammad'],['MV26-C07','مريم وائل ابراهيم محمد ابراهيم','Mariam Wael Ebrahim Mohammed Ebrahim'],['MV26-C08','ملك اسماعيل السيد فتحى ابراهيم','Malak Ismael Alsayed Fathy'],
+['MV26-D01','مصطفى محرم عبدالكريم الهنداوى','Mostafa Moharam Abdalkarem Elhendawy'],['MV26-D02','منى ماجد العربي على محمد ابراهيم','Mona Maged Alarabei Ali Mohamed'],['MV26-D03','ميار رضا البليسي سليمان بدوي','Mayar Reda Elblese Soliman Badwy'],['MV26-D04','نجلاء سعيد عبد الفتاح','Naglaa Saeed Abd El-Fattah'],['MV26-D05','نورهان احمد عبد المنعم ابراهيم عبد الحميد','Nourhan Ahmed Abd Elminam Ibrahim'],['MV26-D06','ياسمين عطا عبدالعزيز اسماعيل علام','Yasmin Ata Abdulaziz'],['MV26-D07','ياسمين محمد العوضى راشد ابراهيم','Yasmen Mohamed Elawady Rashed'],['MV26-D08','يمني محمد فوزي السيد عبدالهادي جاد','Yomna Mohamed Fawzy Elsaied Gad']
+].map(s=>({id:s[0],ar:s[1],en:s[2],g:s[0][5]}));
+const norm=t=>t.toLowerCase().replace(/[أإآا]/g,'ا').replace(/[ىي]/g,'ي').replace(/ة/g,'ه').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/[ً-ْ]/g,'').replace(/\s+/g,' ').trim();
+let gFilter='all', current=null;
+function renderTabs(){
+  const ar=L()==='ar';
+  $('#gtabs').innerHTML=`<button data-g="all" class="${gFilter==='all'?'on':''}">${ar?'الكل':'All'} (32)</button>`+Object.keys(G).map(k=>`<button data-g="${k}" class="${gFilter===k?'on':''}"><i style="background:${G[k].c}"></i>${ar?'جروب':'Group'} ${k}</button>`).join('');
+  $$('#gtabs button').forEach(b=>b.onclick=()=>{gFilter=b.dataset.g;renderNames();});
+}
+function renderNames(){
+  renderTabs();
+  const ar=L()==='ar', q=norm($('#q').value||'');
+  const list=S.filter(s=>(gFilter==='all'||s.g===gFilter)&&(!q||norm(s.ar).includes(q)||norm(s.en).includes(q)||s.id.toLowerCase().includes(q)));
+  $('#names').innerHTML=list.length?list.map(s=>`<button class="nm-b" data-id="${s.id}"><span class="sw" style="background:${G[s.g].c}"></span><span><div class="n1">${ar?s.ar:s.en}</div><div class="n2">${ar?s.en:s.ar}</div></span><span class="gid">${s.id}</span></button>`).join(''):`<div class="empty">${ar?'مفيش اسم مطابق، جرّب جزء من اسمك.':'No match, try part of your name.'}</div>`;
+  $$('#names .nm-b').forEach(b=>b.onclick=()=>showCard(b.dataset.id,true));
+}
+function showCard(id,scroll){
+  const s=S.find(x=>x.id===id); if(!s)return; current=id; store.set('mvme',id);
+  const ar=L()==='ar', g=G[s.g], mates=S.filter(x=>x.g===s.g&&x.id!==s.id);
+  const c=$('#idcard');
+  c.innerHTML=`<div class="band" style="background:${g.hex}"></div><button class="x" aria-label="close">×</button>
+   <div class="hi">${ar?'أهلًا بيك في الورشة 👋':'Welcome to the workshop 👋'}</div>
+   <div class="nmx">${ar?s.ar:s.en}</div><div class="nmy">${ar?s.en:s.ar}</div>
+   <div class="row">
+     <div class="box"><small>${ar?'الـ ID بتاعك':'Your ID'}</small><b>${s.id}</b></div>
+     <div class="box"><small>${ar?'جروبك':'Your group'}</small><span class="gpill"><i style="background:${g.hex}"></i>${ar?'جروب':'Group'} ${s.g}</span><div style="font-size:12px;opacity:.85">${ar?'اللون '+g.ar:g.en+' colour'}</div></div>
+   </div>
+   <div class="mates"><h4>${ar?'زمايلك في الجروب':'Your teammates'}</h4><ul>${mates.map(m=>`<li>${(ar?m.ar:m.en).split(' ').slice(0,2).join(' ')}</li>`).join('')}</ul></div>
+   <div class="note">${ar?'لون الكارنيه بتاعك هو لون جروبك، خليك مع جروبك في كل المحطات.':'Your badge colour matches your group. Stay with your group at every station.'}</div>`;
+  c.classList.add('show'); c.querySelector('.x').onclick=()=>{c.classList.remove('show');current=null;store.set('mvme','');};
+  if(scroll) c.scrollIntoView({behavior:'smooth',block:'center'});
+}
+$('#q').addEventListener('input',renderNames);
+
+/* ---------- C6 hotspots ---------- */
+function selF(i){$$('.hs').forEach(h=>h.classList.toggle('on',h.dataset.f==i));$$('.fx').forEach(f=>f.classList.toggle('on',f.dataset.f==i));}
+$$('.hs').forEach(h=>h.onclick=()=>{selF(h.dataset.f);const f=$(`.fx[data-f="${h.dataset.f}"]`);if(innerWidth<760)f.scrollIntoView({behavior:'smooth',block:'center'});});
+$$('.fx').forEach(f=>f.onclick=()=>selF(f.dataset.f)); selF(0);
+
+/* ---------- glossary ---------- */
+const GL=[
+ ['PEEP','Positive End-Expiratory Pressure','الضغط اللي بيفضل في الرئة في آخر الزفير؛ بيمنع انغلاق الحويصلات وبيحسّن الأكسجة.','Pressure kept in the lungs at end-expiration; prevents alveolar collapse and improves oxygenation.'],
+ ['FiO₂','Fraction of inspired O₂','نسبة الأكسجين في الهواء الداخل للمريض، من 21% لحد 100%.','Oxygen fraction delivered to the patient, from 21% to 100%.'],
+ ['Vt','Tidal volume','حجم النفس الواحد. في الاستراتيجية الواقية للرئة: 6–8 mL/kg من الوزن المثالي (PBW).','Volume of each breath. Lung-protective target: 6–8 mL/kg predicted body weight.'],
+ ['RR','Respiratory rate','عدد الأنفاس في الدقيقة اللي الجهاز بيضمنها.','Number of breaths per minute set on the ventilator.'],
+ ['MV','Minute ventilation','الحجم الكلي في الدقيقة = Vt × RR، وهو المتحكم الأساسي في الـ CO₂.','Total volume per minute = Vt × RR; the main driver of CO₂ removal.'],
+ ['I:E','Inspiratory : Expiratory ratio','نسبة زمن الشهيق للزفير، والمعتاد 1:2.','Ratio of inspiratory to expiratory time, usually 1:2.'],
+ ['PIP','Peak inspiratory pressure','أعلى ضغط في الشهيق؛ بيتأثر بمقاومة المجرى الهوائي والمطاوعة.','Highest pressure during inspiration; reflects airway resistance plus compliance.'],
+ ['Pplat','Plateau pressure','الضغط أثناء inspiratory hold؛ بيعكس ضغط الحويصلات. الهدف ≤ 30 cmH₂O.','Pressure during an inspiratory hold; reflects alveolar pressure. Keep ≤ 30 cmH₂O.'],
+ ['ΔP','Driving pressure','Pplat − PEEP. كل ما قلّ كان أأمن للرئة، والهدف غالبًا أقل من 15 cmH₂O.','Pplat − PEEP. Lower is safer for the lung; commonly targeted below 15 cmH₂O.'],
+ ['Trigger','Flow / pressure trigger','إزاي الجهاز بيحس بمجهود المريض عشان يبدأ النفس.','How the ventilator senses the patient\'s effort to start a breath.'],
+ ['Crs','Compliance','المطاوعة = ΔV/ΔP، يعني الرئة بتتمدد بسهولة قد إيه.','Compliance = ΔV/ΔP: how easily the lungs expand.'],
+ ['ASV','Adaptive Support Ventilation','وضع ذكي من Hamilton بيختار الـ Vt والمعدل حسب ميكانيكا رئة المريض عشان يحقق الـ minute ventilation المطلوب.','Hamilton\'s adaptive mode that selects Vt and rate from the patient\'s lung mechanics to reach the target minute ventilation.'],
+];
+function renderGlossary(){
+  const ar=L()==='ar';
+  $('#gl').innerHTML=GL.map(g=>`<div class="fc" tabindex="0"><div class="in"><div class="f"><b>${g[0]}</b><div><span style="display:block">${g[1]}</span><em>${ar?'اضغط للتعريف ↻':'Tap to flip ↻'}</em></div></div><div class="b"><strong>${g[0]}</strong><div>${ar?g[2]:g[3]}</div></div></div></div>`).join('');
+  $$('.fc').forEach(c=>{c.onclick=()=>c.classList.toggle('flip');c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.classList.toggle('flip')}}});
+}
+
+/* ---------- copy ---------- */
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800);}
+async function copy(t){try{await navigator.clipboard.writeText(t);toast(L()==='ar'?'اتنسخ ✓':'Copied ✓')}catch(e){toast(t)}}
+$('#copytag').onclick=()=>copy('#DeltaMV2026');
+$('#copylink').onclick=()=>copy(location.href.split('#')[0]);
+
+/* ---------- nav highlight + reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+function observe(){$$('.rv:not(.in)').forEach(el=>io.observe(el));}
+const secs=['agenda','group','instructor','hamilton','glossary','organizers','after'];
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id));const on=$('#nav a.on');if(on)on.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}}),{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(id=>so.observe(document.getElementById(id)));
+
+/* ---------- init ---------- */
+setLang('en');
+const me=store.get('mvme'); if(me) showCard(me,false);
+observe();
+})();
+</script>
+</body>
+</html>
